@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Page setup: update the title, fonts, or linked files here. -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#0b0a0f">
+	<title>Panel — Your comic collection</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+	<script src="app.js" defer></script>
+</head>
+<body>
+	<main>
+		<!-- Welcome screen shown first; its button opens the collection below. -->
+		<section class="welcome-screen" id="welcome-screen" aria-labelledby="welcome-title">
+			<header class="welcome-nav">
+				<a class="wordmark" href="#welcome" aria-label="Panel home"><span class="wordmark-mark">CC</span>Comic Collector</a>
+				<span class="nav-note">A home for every issue</span>
+			</header>
+			<div class="welcome-content">
+				<p class="eyebrow"><span class="eyebrow-dot"></span> YOUR COLLECTION, IN ONE PLACE</p>
+				<h1 id="welcome-title">Every issue<br>has a <span>story.</span></h1>
+				<p class="welcome-copy">Keep your collection close. Track the series you love, find the next issue, and make room for another favorite.</p>
+				<button class="button button-primary button-start" id="enter-library" type="button">
+					Open your collection <span aria-hidden="true">&#8594;</span>
+				</button>
+				<p class="welcome-footnote">Your shelf. Your stories. Your way.</p>
+			</div>
+			<!-- Decorative comic-cover artwork; edit its text and shapes in this block. -->
+			<div class="welcome-art" aria-hidden="true">
+				<div class="art-orbit orbit-one"></div>
+				<div class="art-orbit orbit-two"></div>
+				<div class="art-spark spark-one">✳</div>
+				<div class="art-spark spark-two">✦</div>
+				<div class="hero-comic">
+					<div class="hero-comic-top">PANEL / 001</div>
+					<div class="hero-comic-illustration"><span class="hero-moon"></span><span class="hero-silhouette"></span></div>
+					<div class="hero-comic-title">NIGHT<br>SHIFT</div>
+					<div class="hero-comic-bottom">A STORY IN EVERY FRAME</div>
+				</div>
+				<div class="floating-label label-top">ISSUE NO. 08 <span>★</span></div>
+				<div class="floating-label label-bottom">COLLECT WHAT MOVES YOU</div>
+			</div>
+			<div class="welcome-index" aria-hidden="true"><span>01</span><span class="index-line"></span><span>03</span></div>
+		</section>
+
+		<!-- Main collection view. JavaScript fills the comic grid and summary values. -->
+		<section class="library-screen" id="library-screen" aria-labelledby="library-title" hidden>
+			<header class="app-header">
+				<a class="wordmark" href="#library" aria-label="Panel home"><span class="wordmark-mark">P</span>PANEL</a>
+				<div class="header-right"><span class="header-status"><span></span> YOUR PERSONAL SHELF</span><button class="avatar" type="button" aria-label="Your profile">C</button></div>
+			</header>
+
+			<div class="library-main">
+				<div class="library-heading">
+					<div>
+						<p class="eyebrow"><span class="eyebrow-dot"></span> THE COLLECTION</p>
+						<h1 id="library-title">Your shelf<span class="heading-period">.</span></h1>
+						<p class="library-subtitle">A little world, one issue at a time.</p>
+					</div>
+					<button class="button button-primary add-button" id="open-add-dialog" type="button"><span aria-hidden="true">+</span> Add a comic</button>
+				</div>
+
+				<div class="collection-summary" aria-label="Collection summary">
+					<div class="summary-item"><span class="summary-number" id="comic-count">0</span><span class="summary-label">ISSUES ON YOUR SHELF</span></div>
+					<span class="summary-divider" aria-hidden="true"></span>
+					<div class="summary-item"><span class="summary-number" id="series-count">0</span><span class="summary-label">DIFFERENT SERIES</span></div>
+					<span class="summary-note">Made of good stories <span aria-hidden="true">✦</span></span>
+				</div>
+
+				<div class="collection-toolbar">
+					<div class="filter-tabs" role="group" aria-label="Filter comics by genre">
+						<button class="filter-tab is-active" type="button" data-filter="All">All comics</button>
+						<button class="filter-tab" type="button" data-filter="Superhero">Superhero</button>
+						<button class="filter-tab" type="button" data-filter="Fantasy">Fantasy</button>
+						<button class="filter-tab" type="button" data-filter="Sci-fi">Sci-fi</button>
+					</div>
+					<label class="search-box"><span aria-hidden="true">⌕</span><input id="comic-search" type="search" placeholder="Find a comic" aria-label="Search your comics"></label>
+				</div>
+
+				<div class="comic-grid" id="comic-grid" aria-live="polite"></div>
+				<p class="empty-state" id="empty-state" hidden>No comics here yet. Add one to start your collection.</p>
+			</div>
+			<footer class="app-footer"><span>PANEL <span class="footer-dot">·</span> YOUR STORIES, KEPT CLOSE</span><button class="back-button" id="back-to-welcome" type="button">Back to intro <span aria-hidden="true">&#8592;</span></button></footer>
+		</section>
+	</main>
+
+	<!-- Add-comic form. Field names are read by the submit handler in app.js. -->
+	<dialog class="add-dialog" id="add-dialog" aria-labelledby="dialog-title">
+		<form id="add-comic-form">
+			<div class="dialog-heading"><div><p class="eyebrow"><span class="eyebrow-dot"></span> NEW ADDITION</p><h2 id="dialog-title">Add an issue<span class="heading-period">.</span></h2></div><button class="dialog-close" id="close-add-dialog" type="button" aria-label="Close">&#215;</button></div>
+			<label class="form-field">Comic title<input name="title" required maxlength="50" placeholder="e.g. The Long Night"></label>
+			<label class="form-field">Series<input name="series" required maxlength="40" placeholder="e.g. Night Shift"></label>
+			<div class="form-row"><label class="form-field">Issue number<input name="issue" type="number" min="1" max="9999" value="1" required></label><label class="form-field">Genre<select name="genre"><option>Superhero</option><option>Fantasy</option><option>Sci-fi</option><option>Adventure</option><option>Indie</option></select></label></div>
+			<button class="button button-primary dialog-submit" type="submit">Add to my shelf <span aria-hidden="true">&#8594;</span></button>
+		</form>
+	</dialog>
+</body>
+</html>
