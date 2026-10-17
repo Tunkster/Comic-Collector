@@ -138,3 +138,7 @@ addComicForm.addEventListener("submit", (event) => {
 
 // Draw the initial sample or saved shelf as soon as the script loads.
 renderCollection();
+
+
+
+//Testing for Avery
